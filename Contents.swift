@@ -25,11 +25,11 @@ print("Problem 2")
 
 func fibonacchiNumber(num: Int) -> [Int] {
     var counter = 2
-    var fibonacci = [1, 2]
+    var fibonacci = [0, 1]
     
     while counter < num {
         let nextNum = fibonacci[counter - 1] + fibonacci[counter - 2]
-        fibonacci.insert(nextNum, at: fibonacci.count)
+        fibonacci.append(nextNum)
         counter += 1
     }
     
@@ -68,7 +68,7 @@ print("Problem 4")
 func squareNumbers(numbers: [Int]) -> [Int] {
     var squaredNumbers: [Int] = []
     for num in numbers {
-        squaredNumbers.insert(num * num, at: squaredNumbers.count)
+        squaredNumbers.append(num * num)
     }
     print(squaredNumbers)
     return squaredNumbers
@@ -117,21 +117,44 @@ print("")
 print("Problem 7")
 
 var allNumbers = [2, 5, 7, 8, 10, 4, 3, 99]
-allNumbers.removeAll(where: { (num: Int) -> Bool in return num % 2 != 0 })
+
+let removeOddNumbers = {(numbers: inout [Int]) -> Void in
+    var i = 0
+    while i < numbers.count{
+        if numbers[i] % 2 != 0 {
+            numbers.remove(at: i)
+        } else {
+            i += 1
+        }
+    }
+}
+removeOddNumbers(&allNumbers)
+print(allNumbers)
+
+// old solution: allNumbers.removeAll(where: { (num: Int) -> Bool in return num % 2 != 0 })
 // shorter: allNumbers.removeAll(where: { num in num % 2 != 0 })
 
-print(allNumbers)
 print("")
 
 // შექმენით Closure რომელიც დამაპავს(ანუ გააკეთებს ქმედებას ყველა მასივის ელემენტზე) Int-ების Array-ის და თითოეულ ელემენტს გაათმაგებს.
 print("Problem 8")
 
-let numbersArray = [99, 44, 2, 1, 8, 77]
+var numbersArray = [99, 44, 2, 1, 8, 77]
 
-let arrayWithTenTimesNumbers = numbersArray.map { (num: Int) -> Int in return num * 10 }
+let elementsTenTimes = {(numbers: inout [Int]) -> Void in
+    var i = 0
+    while i < numbers.count {
+        numbers[i] *= 10
+        i += 1
+    }
+}
+elementsTenTimes(&numbersArray)
+print(numbersArray)
+
+// old solution: let arrayWithTenTimesNumbers = numbersArray.map { (num: Int) -> Int in return num * 10 }
 // shorter: arrayNumbers.map { num in num * 10 }
 
-print(arrayWithTenTimesNumbers)
+
 
 print("")
 
